@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }, new IntentFilter(DELIVERED));
 
-        message = "긴급 상황 발생!!" + "\n" + message + "사건 발생 위치 위 링크 클릭";
+        message = "긴급 상황 발생!!" + "\n" + message;
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI); // 문자 메세지 보내기
     }
@@ -109,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
             LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             Location lastlocation = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-            //tv.setText("수신중...");
             manager.requestLocationUpdates(LocationManager.GPS_PROVIDER,100,1,mLocationListener);
             manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,100,1,mLocationListener);
 
@@ -132,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
             double altitude = location.getAltitude();
             double accuracy = location.getAccuracy();
             String provider = location.getProvider();
-            //tv.setText("경도 : "+longtitude+" / 위도 : "+latitude);
+
             url = "https://www.google.co.kr/maps/@"+latitude+","+longtitude+",17z";
             // 구글 지도 URL
         }
