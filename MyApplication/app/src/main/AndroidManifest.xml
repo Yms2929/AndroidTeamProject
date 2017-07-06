@@ -22,7 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Option"></activity>
+        <activity android:name=".Option" />
+        <activity android:name=".ContactInfo" />
+        <activity android:name=".ContactList" />
+        <activity android:name=".CheckList" />
+        <activity android:name=".Sound"></activity>
     </application>
 
 </manifest>
