@@ -15,11 +15,11 @@ import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     String url;
+    String phoneNumber = "01029293308";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +28,23 @@ public class MainActivity extends AppCompatActivity {
 
         GetLocation();
 
-        Button sendBtn = (Button)findViewById(R.id.sendSmsBtn);
-        sendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { // 긴급요청 버튼 이벤트
-                EditText addrTxt = (EditText)findViewById(R.id.addrEditText);
+        Button bt1 = (Button)findViewById(R.id.button);
+        Button bt2 = (Button)findViewById(R.id.button2);
+        Button bt3 = (Button)findViewById(R.id.button3);
 
+        bt1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Option.class);
+                startActivity(intent);
+            }
+        });
+
+        bt2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 try {
-                    sendSMS(addrTxt.getText().toString(), url); // 문자 보내기 함수 호출
+                    sendSMS(phoneNumber, url); // 문자 보내기 함수 호출
                     Toast.makeText(MainActivity.this, "SMS 발송 완료", Toast.LENGTH_LONG).show(); // 확인 토스트
 
                 } catch (Exception e) {
