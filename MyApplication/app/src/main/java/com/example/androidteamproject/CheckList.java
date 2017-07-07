@@ -6,8 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -18,11 +16,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CheckList extends AppCompatActivity {
-    EditText inputPhonenumber;          // 폰번호 입력칸
-    EditText inputName;                 // 이름 입력칸
+import static android.R.layout.simple_list_item_1;
 
-    Button saveBtn;                     // 저장 버튼
+public class CheckList extends AppCompatActivity {
 
     String[] arrPhonenumber = new String[100];
     String[] arrName = new String[100];
@@ -30,6 +26,9 @@ public class CheckList extends AppCompatActivity {
 
     List<String> listPhonenumber = new ArrayList<String>(); // 폰번호 리스트
     List<String> listName = new ArrayList<String>();        //이름 리스트
+    List<String> listNamePhone = new ArrayList<String>();
+
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,17 +39,18 @@ public class CheckList extends AppCompatActivity {
 
         ListView listView = (ListView)findViewById(R.id.listView);
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrNamePhone);
+        adapter = new ArrayAdapter<String>(this, simple_list_item_1, listNamePhone);
         listView.setAdapter(adapter);
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 listName.remove(arg2);
                 listPhonenumber.remove(arg2);
-                arrName = listName.toArray(new String[listName.size()]);
-                arrPhonenumber=listPhonenumber.toArray(new String[listPhonenumber.size()]);
+                listNamePhone.remove(arg2);
                 DeleteData();
                 adapter.notifyDataSetChanged();
+
+
                 return false;
             }
         });
@@ -94,6 +94,7 @@ public class CheckList extends AppCompatActivity {
              */
             listName = new ArrayList<String>(Arrays.asList(arrName));
             listPhonenumber = new ArrayList<String>(Arrays.asList(arrPhonenumber));
+            listNamePhone = new ArrayList<String>(Arrays.asList(arrNamePhone));
         }
         catch(IOException e){
             Toast.makeText(getApplicationContext(),"★읽기 실패 : "+e.getMessage(),Toast.LENGTH_SHORT).show();

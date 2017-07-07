@@ -1,65 +1,57 @@
 package com.example.androidteamproject;
 
+import android.app.Activity;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.provider.ContactsContract;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class ContactList extends AppCompatActivity {
+import static com.example.androidteamproject.R.layout.activity_contact_list;
 
+public class ContactList extends Activity {
+    ListView listPerson;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_list);
+        setContentView(activity_contact_list);
 
-        //ListView listView = (ListView)findViewById(R.id.listView);
-        ArrayList<String> nameList = new ArrayList<String>();
-        ArrayList<String> phoneList = new ArrayList<String>();
+        listPerson = (ListView)findViewById(R.id.listView);
+        getList();
+    }
 
-//        ContentResolver cr = getContentResolver();
-//        Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-//
-//        int idIndex = cursor.getColumnIndex(ContactsContract.Contacts._ID);
-//        int nameIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
-//
-//        StringBuilder result = new StringBuilder();
-//        while (cursor.moveToNext()) {
-//            result.append(cursor.getString(nameIndex) + " : ");
-//            nameList.add(cursor.getString(nameIndex));
-//
-//            String id = cursor.getString(idIndex);
-//            Cursor cursor2 = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
-//                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{id},null);
-//
-//            int typeIndex = cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE);
-//            int numberIndex = cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-//
-//            while (cursor2.moveToNext()) {
-//                String num = cursor2.getString(numberIndex);
-//                switch (cursor2.getInt(typeIndex)) {
-//                    case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
-//                        result.append("Mobile : " + num);
-//                        phoneList.add(num);
-//                        break;
-//                    case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
-//                        result.append("Home :" + num);
-//                        phoneList.add(num);
-//                        break;
-//                    case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
-//                        result.append("Work :" + num);
-//                        phoneList.add(num);
-//                        break;
-//                }
-//            }
-//            cursor2.close();
-//            result.append("\n");
-//        }
-//        cursor.close();
-//
-//        TextView txtResult = (TextView)findViewById(R.id.textView);
-//        txtResult.setText(result);
+    public void getList(){
 
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, nameList);
-        //listView.setAdapter(adapter);
+        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+
+        String[] projection = new String[] {
+                ContactsContract.CommonDataKinds.Phone.NUMBER,
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
+        };
+
+        String[] selectionArgs = null;
+
+        //정렬
+        String sortOrder = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " COLLATE LOCALIZED ASC";
+        //조회해서 가져온다
+        Cursor contactCursor = managedQuery(uri, projection, null, selectionArgs, sortOrder);
+
+        //정보를 담을 array 설정
+        ArrayList persons = new ArrayList();
+
+        if(contactCursor.moveToFirst()){
+            do{
+                persons.add(contactCursor.getString(1) + "/" + contactCursor.getString(0));
+            }while(contactCursor.moveToNext());
+        }
+
+        //리스트에 연결할 adapter 설정
+        ArrayAdapter adp = new ArrayAdapter(ContactList.this, android.R.layout.simple_list_item_1, persons);
+
+        //리스트뷰에 표시
+        listPerson.setAdapter(adp);
     }
 }

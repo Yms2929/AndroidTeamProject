@@ -40,22 +40,5 @@ public class Option extends Activity {
             }
         });
 
-        Button bt7 = (Button)findViewById(R.id.button7);
-        bt7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Option.this, Sound.class);
-                startActivity(intent);
-            }
-        });
-
-        Button bt8 = (Button)findViewById(R.id.button8);
-        bt8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Option.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }

@@ -42,7 +42,7 @@ public class ContactInfo extends AppCompatActivity {
         textviewName = (TextView)findViewById(R.id.textviewName);
         saveBtn = (Button) findViewById(R.id.saveBtn);
 
-        saveBtn.setText("전화번호 추가하기");
+        saveBtn.setText("긴급 연락망 등록하기");
 
         LoadData();
 
@@ -88,6 +88,8 @@ public class ContactInfo extends AppCompatActivity {
                     outName.close();
 
                     Toast.makeText(getApplicationContext(), "연락망에 추가되었습니다", Toast.LENGTH_SHORT).show();
+                    inputName.setText("");
+                    inputPhonenumber.setText("");
                 }
                 catch(IOException e)
                 {
