@@ -13,13 +13,14 @@ import java.util.ArrayList;
 import static com.example.androidteamproject.R.layout.activity_contact_list;
 
 public class ContactList extends Activity {
-    ListView listPerson;
+    ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(activity_contact_list);
 
-        listPerson = (ListView)findViewById(R.id.listView);
+        listView = (ListView)findViewById(R.id.listView);
         getList();
     }
 
@@ -52,6 +53,6 @@ public class ContactList extends Activity {
         ArrayAdapter adp = new ArrayAdapter(ContactList.this, android.R.layout.simple_list_item_1, persons);
 
         //리스트뷰에 표시
-        listPerson.setAdapter(adp);
+        listView.setAdapter(adp);
     }
 }
